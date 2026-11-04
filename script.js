@@ -1,7 +1,7 @@
 /* LUNAR Studio — calendário demonstrativo e pedido via WhatsApp.
-   Edite o whatsappNumber abaixo com o número real da Isla, DDI+DDD+número (só dígitos).
+   WhatsApp comercial da Isla: DDI+DDD+número (só dígitos).
    A agenda não é sincronizada; conectar backend antes de anunciar disponibilidade em tempo real. */
-window.LUNAR_CONFIG = window.LUNAR_CONFIG || { whatsappNumber: '' };
+window.LUNAR_CONFIG = window.LUNAR_CONFIG || { whatsappNumber: '5553997089603' };
 (function () {
   'use strict';
   var state = { date: null, time: null, service: null };
