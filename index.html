@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f9f7f1">
+  <meta name="description" content="LUNAR Studio, um cantinho de cuidado e carinho. Conheça nossos serviços e solicite seu horário com a Isla.">
+  <title>LUNAR Studio | Nail Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./script.js"></script>
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><symbol id="star" viewBox="0 0 100 100"><path d="M50 0C55 29 66 45 100 50C66 55 55 71 50 100C45 71 34 55 0 50C34 45 45 29 50 0Z" fill="currentColor"/></symbol><symbol id="arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol></svg>
+  <div class="site-orbit orbit-one" aria-hidden="true"><div class="orbit-spin"><svg><use href="#star"/></svg><i></i><svg><use href="#star"/></svg><i></i><svg><use href="#star"/></svg></div></div>
+  <div class="site-orbit orbit-two" aria-hidden="true"><div class="orbit-spin"><svg><use href="#star"/></svg><i></i><svg><use href="#star"/></svg><i></i><svg><use href="#star"/></svg></div></div>
+  <header class="topbar" id="topo">
+    <a class="brand" href="#topo" aria-label="LUNAR Studio, voltar ao início">
+      <img src="./assets/logo.webp" alt="LUNAR Studio Nail Designer" width="244" height="104" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="brand-text" hidden>LUNAR <span>✦</span></span>
+    </a>
+    <nav aria-label="Navegação principal"><a href="#sobre">A Isla</a><a href="#servicos">Serviços</a><a class="nav-cta" href="#agendar">Agendar <svg><use href="#arrow"/></svg></a></nav>
+  </header>
+  <main>
+    <section class="hero section-shell" aria-labelledby="hero-title">
+      <div class="hero-graphic" aria-hidden="true"><span class="hero-ring"></span><svg class="hero-star"><use href="#star"/></svg><span class="hero-speck s1"></span><span class="hero-speck s2"></span><span class="hero-speck s3"></span></div>
+      <div class="eyebrow"><span class="eyebrow-line"></span> STUDIO LUNAR <span class="eyebrow-line"></span></div>
+      <h1 id="hero-title">Seu momento de cuidado <em>começa aqui.</em></h1>
+      <p>Um cantinho feito pra você se sentir ainda mais linda.</p>
+      <a class="button button-primary" href="#agendar">Agendar meu horário <svg><use href="#arrow"/></svg></a>
+      <div class="hero-foot"><span>BELEZA NOS PEQUENOS DETALHES</span><span class="foot-star">✦</span><span>FEITO COM CARINHO</span></div>
+    </section>
+    <section class="about section-shell reveal" id="sobre" aria-labelledby="about-title">
+      <div class="about-art" aria-hidden="true"><div class="about-frame"><div class="about-mono">L<span>✦</span></div><span class="about-seal">com carinho, Isla</span></div><svg class="about-star"><use href="#star"/></svg></div>
+      <div class="about-copy"><div class="section-kicker"><svg><use href="#star"/></svg> PRAZER, ISLA</div><h2 id="about-title">Oi, eu sou a <span>Isla!</span> <span class="outline-heart">♡</span></h2><p>A LUNAR nasceu do meu carinho pelo mundo das unhas e da vontade de criar um espaço delicado e acolhedor.</p><p>Aqui, cada atendimento é pensado com cuidado pra que você se sinta confortável, bem e ainda mais linda.</p><a href="#servicos" class="text-link">Conheça nossos cuidados <svg><use href="#arrow"/></svg></a></div>
+    </section>
+    <section class="services section-shell" id="servicos" aria-labelledby="services-title"><div class="services-head reveal"><div><div class="section-kicker"><svg><use href="#star"/></svg> FEITO PRA VOCÊ</div><h2 id="services-title">Nossos <span>cuidados.</span></h2></div><p>Escolha o estilo que combina com você.</p></div>
+      <div class="service-grid">
+        <article class="service-card reveal"><div class="service-photo"><img src="./assets/molde-f1.webp" alt="Referência de unhas alongadas com acabamento azul e detalhes delicados" loading="lazy" width="340" height="510"><span class="photo-tag">01 / ALONGAMENTO</span></div><div class="service-body"><div class="service-info"><h3>Alongamento Molde F1</h3><p>Unhas alongadas e com formato definido. O molde ajuda na construção e proporciona um acabamento bonito e uniforme.</p></div><button type="button" class="circle-arrow service-select" data-service="Alongamento Molde F1" aria-label="Solicitar Alongamento Molde F1"><svg><use href="#arrow"/></svg></button></div></article>
+        <article class="service-card reveal"><div class="service-photo"><img src="./assets/esmalte-gel.webp" alt="Referência de unhas esmaltadas em azul com brilho e detalhes prateados" loading="lazy" width="340" height="530"><span class="photo-tag">02 / ESMALTAÇÃO</span></div><div class="service-body"><div class="service-info"><h3>Esmaltação em Gel</h3><p>Cor intensa, brilho e acabamento duradouro. O esmalte em gel é aplicado em camadas e curado na cabine apropriada.</p></div><button type="button" class="circle-arrow service-select" data-service="Esmaltação em Gel" aria-label="Solicitar Esmaltação em Gel"><svg><use href="#arrow"/></svg></button></div></article>
+      </div><p class="image-note">Imagens ilustrativas de referência. Os resultados variam conforme o procedimento.</p>
+    </section>
+    <section class="booking" id="agendar" aria-labelledby="booking-title"><div class="booking-inner section-shell"><div class="booking-intro reveal"><div class="section-kicker section-kicker-light"><svg><use href="#star"/></svg> UM TEMPINHO SÓ SEU</div><h2 id="booking-title">Vamos marcar <span>seu horário?</span></h2><p>Escolha o dia, o horário e o serviço. A Isla confirma tudo com você pelo WhatsApp. ♡</p><div class="booking-art" aria-hidden="true"><svg class="booking-art-star"><use href="#star"/></svg><div class="booking-dots">✦ · ✦ · ✦</div></div></div>
+      <div class="booking-card reveal" id="booking-card"><div class="card-top"><span>SEU AGENDAMENTO</span><span class="card-star">✦</span></div>
+        <div id="booking-form"><div class="step-label"><span class="step-number">01</span><h3>Escolha o dia</h3></div>
+          <div class="calendar"><div class="calendar-head"><span id="month-title"></span><div class="calendar-controls"><button type="button" id="prev-month" aria-label="Mês anterior">‹</button><button type="button" id="next-month" aria-label="Próximo mês">›</button></div></div><div class="weekday-row" aria-hidden="true"><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span><span>DOM</span></div><div class="calendar-grid" id="calendar-grid" role="group" aria-label="Escolha uma data"></div></div>
+          <div class="field-section"><div class="step-label"><span class="step-number">02</span><h3>Escolha o horário</h3></div><div class="time-grid" id="times"><button type="button" data-time="14:00">14:00</button><button type="button" data-time="16:00">16:00</button><button type="button" data-time="18:00">18:00</button></div><p class="microcopy">Horários para solicitar, sujeitos à confirmação.</p></div>
+          <div class="field-section"><div class="step-label"><span class="step-number">03</span><h3>Qual serviço você deseja?</h3></div><div class="service-options" id="service-options"><label><input type="radio" name="service" value="Alongamento Molde F1"><span>Alongamento Molde F1</span><b>↗</b></label><label><input type="radio" name="service" value="Esmaltação em Gel"><span>Esmaltação em Gel</span><b>↗</b></label></div></div>
+          <p id="form-error" class="form-error" role="alert" hidden></p><button type="button" id="review-button" class="button button-primary button-full">Revisar meu pedido <svg><use href="#arrow"/></svg></button></div>
+        <div id="booking-review" hidden><div class="review-mark"><svg><use href="#star"/></svg></div><h3>Tá quase prontinho! ♡</h3><p class="review-desc">Confere os detalhes antes de enviar pra Isla.</p><div class="review-summary"><div><span>Data</span><strong id="review-date"></strong></div><div><span>Horário</span><strong id="review-time"></strong></div><div><span>Serviço</span><strong id="review-service"></strong></div></div><button type="button" id="send-button" class="button button-primary button-full">Enviar pelo WhatsApp <svg><use href="#arrow"/></svg></button><button type="button" id="back-button" class="button button-ghost button-full">Voltar e alterar</button><p class="microcopy">O pedido não garante a reserva. Aguarde a confirmação da Isla.</p><p id="whatsapp-warning" class="form-error" role="alert" hidden>O número da Isla ainda não foi configurado. Seu pedido pode ser copiado abaixo.</p><button id="copy-button" class="copy-button" type="button" hidden>Copiar mensagem</button></div>
+      </div></div></section>
+  </main>
+  <footer class="footer section-shell"><div class="footer-left"><span class="footer-brand">LUNAR <span>✦</span></span><p>Carinho em cada detalhe.</p></div><div class="footer-right"><a href="#topo">Voltar ao topo ↑</a><span>© <span id="year"></span> LUNAR Studio</span></div></footer>
+</body>
+</html>
