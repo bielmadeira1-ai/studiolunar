@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#1f4db1">
+  <meta name="referrer" content="no-referrer">
+  <title>Minha agenda · LUNAR Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/agenda/agenda.css">
+  <script defer src="/agenda/agenda.js"></script>
+</head>
+<body>
+  <header class="header"><a href="/" aria-label="Site da Lunar"><img src="/assets/logo.webp" alt="LUNAR Studio" width="150" height="64"></a><span class="private-label">✦ &nbsp; SUA ÁREA PRIVADA</span><button id="logout" class="quiet" hidden>Sair ↗</button></header>
+  <main>
+    <section id="login-panel" class="login-card" aria-labelledby="login-title">
+      <span class="large-star" aria-hidden="true">✦</span><p class="eyebrow">TUDO NO SEU TEMPO</p>
+      <h1 id="login-title">Sua agenda,<br><em>bem cuidada.</em></h1>
+      <p id="login-description">Entre para organizar seus atendimentos.</p>
+      <form id="login-form">
+        <label for="password" id="password-label">Sua senha</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required maxlength="128">
+        <button class="primary" id="login-submit">Entrar na minha agenda <span>↗</span></button>
+      </form>
+      <p id="login-error" class="error" role="alert" hidden></p>
+      <p class="small" id="setup-hint" hidden>Para o primeiro acesso, abra o link de ativação que foi enviado para você.</p>
+      <a class="back-link" href="/">← Voltar ao site</a>
+    </section>
+
+    <section id="dashboard" class="dashboard" hidden>
+      <div class="page-heading"><div><p class="eyebrow">LUNAR · ORGANIZAÇÃO COM CARINHO</p><h1>Minha <em>agenda.</em></h1><p>Um dia de cada vez. Tudo por aqui.</p></div><button id="new-booking" class="primary">+ Novo atendimento</button></div>
+      <p id="notice" class="notice" role="status" hidden></p>
+      <div class="agenda-layout">
+        <section class="calendar-card" aria-label="Calendário de atendimentos">
+          <div class="calendar-heading"><h2 id="month-label"></h2><div class="month-controls"><button id="previous-month" aria-label="Mês anterior">‹</button><button id="next-month" aria-label="Próximo mês">›</button></div></div>
+          <div class="weekdays" aria-hidden="true"><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span><span>D</span></div>
+          <div id="calendar-days" class="calendar-days" aria-label="Selecione um dia"></div>
+          <div class="legend"><span><i class="booking-dot"></i> Atendimento</span><span><i class="block-dot"></i> Bloqueado</span></div>
+          <div class="month-summary"><span id="month-total">—</span><span id="pending-total">—</span></div>
+          <button id="go-today" class="today-button">Voltar para hoje</button>
+        </section>
+        <section class="day-card" aria-labelledby="day-title">
+          <div class="day-heading"><div><p class="eyebrow" id="day-weekday"></p><h2 id="day-title"></h2></div><button id="block-day" class="secondary" disabled>Bloquear dia</button></div>
+          <p id="day-message" class="day-message">Carregando sua agenda…</p>
+          <div id="day-slots" class="day-slots"></div>
+          <div id="cancelled-list" class="cancelled-list" hidden></div>
+          <p class="sync-note">Os bloqueios aparecem no calendário das clientes.</p>
+        </section>
+      </div>
+      <div class="dashboard-footer"><span>✦ Com carinho, Lunar.</span><button id="change-password" class="quiet">Alterar senha</button><button id="refresh" class="quiet">↻ Atualizar agenda</button></div>
+    </section>
+  </main>
+
+  <dialog id="appointment-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-heading"><div><p class="eyebrow">SEU ATENDIMENTO</p><h2 id="dialog-title">Novo atendimento</h2></div><button type="button" class="close-dialog" aria-label="Fechar">×</button></div>
+    <form id="appointment-form">
+      <label for="client-name">Nome da cliente</label><input id="client-name" autocomplete="name" required maxlength="100">
+      <label for="client-phone">WhatsApp com DDD</label><input id="client-phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="(53) 99999-9999">
+      <label for="client-service">Serviço</label><select id="client-service" required><option>Alongamento Molde F1</option><option>Esmaltação em Gel</option></select>
+      <div class="form-row"><div><label for="booking-date">Dia</label><input type="date" id="booking-date" required></div><div><label for="booking-time">Horário</label><select id="booking-time"><option>14:00</option><option>16:00</option><option>18:00</option></select></div></div>
+      <label for="booking-status">Situação</label><select id="booking-status"><option value="pending">A confirmar</option><option value="confirmed">Confirmado</option><option value="completed">Concluído</option><option value="cancelled">Cancelado · liberar horário</option></select>
+      <label for="booking-notes">Observações <span class="optional">opcional</span></label><textarea id="booking-notes" rows="3" maxlength="800" placeholder="Uma preferência, uma ideia para a decoração…"></textarea>
+      <p id="dialog-error" class="error" role="alert" hidden></p>
+      <button class="primary" id="save-booking">Salvar atendimento <span>✓</span></button>
+      <a id="client-whatsapp" class="whatsapp-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Conversar no WhatsApp ↗</a>
+    </form>
+  </dialog>
+  <dialog id="password-dialog" aria-labelledby="password-title"><div class="dialog-heading"><h2 id="password-title">Alterar senha</h2><button class="close-dialog" aria-label="Fechar">×</button></div><form id="password-form"><label for="new-password">Nova senha · mínimo 10 caracteres</label><input id="new-password" type="password" minlength="10" maxlength="128" autocomplete="new-password" required><p id="password-error" class="error" role="alert" hidden></p><button class="primary">Salvar nova senha</button></form></dialog>
+</body>
+</html>
