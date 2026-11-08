@@ -217,9 +217,12 @@
     $('login-submit').disabled = true;
     $('login-error').hidden = true;
     try {
-      const result = await api(needsSetup ? 'setup' : 'login', { password: $('password').value, ...(needsSetup ? { token: activationToken } : {}) });
+      const result = await api(needsSetup ? 'setup' : 'login', { password: $('password').value, ...(needsSetup ? { token: activationToken || $('activation-code').value.trim() } : {}) });
       csrf = result.csrf;
       needsSetup = false;
+      $('activation-code').value = '';
+      $('activation-field').hidden = true;
+      $('setup-hint').hidden = true;
       $('password').value = '';
       showDashboard();
     } catch (error) { $('login-error').textContent = error.message; $('login-error').hidden = false; }
@@ -252,13 +255,13 @@
       if (result.authenticated) { csrf = result.csrf; showDashboard(); return; }
       if (needsSetup) {
         $('login-title').textContent = 'Sua agenda começa aqui.';
-        $('login-description').textContent = activationToken ? 'Crie uma senha para acessar e cuidar dos seus atendimentos.' : 'Sua área de atendimentos está pronta para ser ativada.';
+        $('login-description').textContent = 'Crie uma senha para acessar e cuidar dos seus atendimentos.';
         $('password-label').textContent = 'Crie sua senha · mínimo 10 caracteres';
         $('password').minLength = 10;
         $('password').autocomplete = 'new-password';
         $('login-submit').textContent = 'Criar senha e entrar ↗';
         $('setup-hint').hidden = Boolean(activationToken);
-        $('login-form').hidden = !activationToken;
+        $('activation-field').hidden = Boolean(activationToken);
       }
     } catch (error) { $('login-error').textContent = error.message; $('login-error').hidden = false; }
   })();

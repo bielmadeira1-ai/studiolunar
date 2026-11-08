@@ -21,12 +21,13 @@
       <h1 id="login-title">Sua agenda,<br><em>bem cuidada.</em></h1>
       <p id="login-description">Entre para organizar seus atendimentos.</p>
       <form id="login-form">
+        <div id="activation-field" hidden><label for="activation-code">Sua chave de ativação</label><input id="activation-code" type="password" autocomplete="off" maxlength="80" placeholder="Cole a chave enviada na conversa"></div>
         <label for="password" id="password-label">Sua senha</label>
         <input type="password" id="password" name="password" autocomplete="current-password" required maxlength="128">
         <button class="primary" id="login-submit">Entrar na minha agenda <span>↗</span></button>
       </form>
       <p id="login-error" class="error" role="alert" hidden></p>
-      <p class="small" id="setup-hint" hidden>Para o primeiro acesso, abra o link de ativação que foi enviado para você.</p>
+      <p class="small" id="setup-hint" hidden>Use a chave enviada na conversa e escolha sua senha. A chave funciona uma única vez.</p>
       <a class="back-link" href="/">← Voltar ao site</a>
     </section>
 
