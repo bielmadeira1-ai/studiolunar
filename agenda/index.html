@@ -34,6 +34,7 @@
     <section id="dashboard" class="dashboard" hidden>
       <div class="page-heading"><div><p class="eyebrow">LUNAR · ORGANIZAÇÃO COM CARINHO</p><h1>Minha <em>agenda.</em></h1><p>Um dia de cada vez. Tudo por aqui.</p></div><button id="new-booking" class="primary">+ Novo atendimento</button></div>
       <p id="notice" class="notice" role="status" hidden></p>
+      <section id="pending-panel" class="pending-panel" hidden><div class="calendar-heading"><h2>Pedidos para confirmar</h2><span class="small">Preenchidos pelas clientes</span></div><p class="small">O horário fica ocupado depois da sua confirmação.</p><div id="pending-list" class="pending-list"></div></section>
       <div class="agenda-layout">
         <section class="calendar-card" aria-label="Calendário de atendimentos">
           <div class="calendar-heading"><h2 id="month-label"></h2><div class="month-controls"><button id="previous-month" aria-label="Mês anterior">‹</button><button id="next-month" aria-label="Próximo mês">›</button></div></div>
@@ -62,10 +63,10 @@
       <label for="client-phone">WhatsApp com DDD</label><input id="client-phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="(53) 99999-9999">
       <label for="client-service">Serviço</label><select id="client-service" required><option>Alongamento Molde F1</option><option>Esmaltação em Gel</option></select>
       <div class="form-row"><div><label for="booking-date">Dia</label><input type="date" id="booking-date" required></div><div><label for="booking-time">Horário</label><select id="booking-time"><option>14:00</option><option>16:00</option><option>18:00</option></select></div></div>
-      <label for="booking-status">Situação</label><select id="booking-status"><option value="pending">A confirmar</option><option value="confirmed">Confirmado</option><option value="completed">Concluído</option><option value="cancelled">Cancelado · liberar horário</option></select>
+      <label for="booking-status">Situação</label><select id="booking-status"><option value="pending">A confirmar</option><option value="confirmed">Confirmado</option><option value="in_progress">Em andamento</option><option value="completed">Concluído</option><option value="cancelled">Cancelado · liberar horário</option></select>
       <label for="booking-notes">Observações <span class="optional">opcional</span></label><textarea id="booking-notes" rows="3" maxlength="800" placeholder="Uma preferência, uma ideia para a decoração…"></textarea>
       <p id="dialog-error" class="error" role="alert" hidden></p>
-      <button class="primary" id="save-booking">Salvar atendimento <span>✓</span></button>
+      <div id="request-actions" class="form-row" hidden><button type="button" class="primary" id="confirm-request">Confirmar pedido ✓</button><button type="button" class="secondary" id="cancel-request">Cancelar pedido</button></div><button class="primary" id="save-booking">Salvar atendimento <span>✓</span></button>
       <a id="client-whatsapp" class="whatsapp-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Conversar no WhatsApp ↗</a>
     </form>
   </dialog>

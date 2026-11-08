@@ -128,7 +128,7 @@ window.LUNAR_CONFIG = window.LUNAR_CONFIG || { whatsappNumber: '5553997089603' }
       if (!response.ok) throw new Error(result.error || 'Não foi possível enviar. Tente novamente.');
       state.booked = true;
       document.getElementById('review-title').textContent = 'Pedido recebido! ♡';
-      document.getElementById('review-description').textContent = 'Seu pedido já está na agenda da Isla. Continue pelo WhatsApp para combinar os detalhes.';
+      document.getElementById('review-description').textContent = 'Seu pedido já aparece para a Isla. Continue pelo WhatsApp para combinar os detalhes. O horário fica reservado após a confirmação.';
       document.getElementById('confirmation-note').textContent = 'Aguarde a confirmação da Isla pelo WhatsApp.';
       button.hidden = true;
       document.getElementById('back-button').hidden = true;
@@ -137,6 +137,7 @@ window.LUNAR_CONFIG = window.LUNAR_CONFIG || { whatsappNumber: '5553997089603' }
       whatsapp.href = 'https://wa.me/' + number + '?text=' + encodeURIComponent(message());
       whatsapp.hidden = false;
       document.getElementById('copy-button').hidden = false;
+      window.location.assign(whatsapp.href);
     } catch (failure) { document.getElementById('review-error').textContent = failure.message; document.getElementById('review-error').hidden = false; }
     finally { button.disabled = false; document.getElementById('back-button').disabled = false; }
   });

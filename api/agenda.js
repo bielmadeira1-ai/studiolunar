@@ -5,7 +5,7 @@ const previewId = createHash('sha256').update(process.env.VERCEL_GIT_COMMIT_REF 
 const STORE_PATH = process.env.VERCEL_ENV === 'preview' ? 'agenda/preview-' + previewId + '.json' : 'agenda/state-v1.json';
 const TIMES = ['14:00', '16:00', '18:00'];
 const SERVICES = ['Alongamento Molde F1', 'Esmaltação em Gel'];
-const ACTIVE = ['pending', 'confirmed', 'completed'];
+const ACTIVE = ['confirmed', 'in_progress', 'completed'];
 const COOKIE = '__Host-lunar-session';
 const SESSION_SECONDS = 60 * 60 * 12;
 
@@ -259,7 +259,7 @@ export function createHandler(storage = { read: readStore, write: writeStore }) 
       if (action === 'save') {
         const input = bookingInput(body, true);
         const status = body.status || 'confirmed';
-        if (![...ACTIVE, 'cancelled'].includes(status)) throw new AgendaError(400, 'Status inválido.');
+        if (![...ACTIVE, 'pending', 'cancelled'].includes(status)) throw new AgendaError(400, 'Status inválido.');
         const id = body.id || randomUUID();
         await mutate(storage, data => {
           if (data.auth.version !== session.version) throw new AgendaError(401, 'Entre novamente.');

@@ -6,7 +6,7 @@
   const parseDate = value => new Date(value + 'T12:00:00');
   const todayKey = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
   const monthFormat = new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' });
-  const statusLabels = { pending: 'A confirmar', confirmed: 'Confirmado', completed: 'Concluído', cancelled: 'Cancelado' };
+  const statusLabels = { pending: 'A confirmar', confirmed: 'Confirmado', in_progress: 'Em andamento', completed: 'Concluído', cancelled: 'Cancelado' };
   let selected = todayKey;
   let visible = parseDate(selected);
   let csrf = '';
@@ -81,6 +81,7 @@
       loading = false;
       $('new-booking').disabled = false;
       renderCalendar();
+      renderPending();
       renderDay();
     } catch (error) {
       if (current !== generation) return;
@@ -100,7 +101,7 @@
     for (let i = 0; i < offset; i += 1) grid.append(node('span'));
     for (let day = 1; day <= count; day += 1) {
       const date = dateKey(new Date(visible.getFullYear(), visible.getMonth(), day));
-      const appointments = records.appointments.filter(item => item.date === date && item.status !== 'cancelled');
+      const appointments = records.appointments.filter(item => item.date === date && !['cancelled', 'pending'].includes(item.status));
       const blocked = isDayBlocked(date);
       const button = node('button', '', String(day));
       button.type = 'button';
@@ -112,9 +113,25 @@
       button.addEventListener('click', () => { selected = date; renderCalendar(); renderDay(); });
       grid.append(button);
     }
-    const active = records.appointments.filter(item => item.status !== 'cancelled');
+    const active = records.appointments.filter(item => !['cancelled', 'pending'].includes(item.status));
     $('month-total').textContent = active.length + (active.length === 1 ? ' atendimento' : ' atendimentos');
-    $('pending-total').textContent = active.filter(item => item.status === 'pending').length + ' a confirmar';
+    $('pending-total').textContent = records.appointments.filter(item => item.status === 'pending').length + ' a confirmar';
+  }
+
+  function renderPending() {
+    const pending = records.appointments.filter(item => item.status === 'pending').sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+    $('pending-panel').hidden = !pending.length;
+    $('pending-list').replaceChildren();
+    pending.forEach(record => {
+      const button = node('button', 'slot-main');
+      button.type = 'button';
+      const info = node('span', 'slot-info');
+      info.append(node('strong', '', record.name), node('small', '', record.service));
+      button.append(node('span', 'slot-time', record.time), info, node('span', 'slot-arrow', '↗'));
+      info.append(node('small', '', parseDate(record.date).toLocaleDateString('pt-BR') + ' · A confirmar'));
+      button.addEventListener('click', () => openAppointment(record));
+      $('pending-list').append(button);
+    });
   }
 
   function renderDay() {
@@ -125,7 +142,7 @@
     $('block-day').textContent = blocked ? 'Liberar dia' : 'Bloquear dia';
     $('block-day').classList.toggle('blocked', blocked);
     $('block-day').disabled = loading;
-    const bookings = records.appointments.filter(item => item.date === selected && item.status !== 'cancelled');
+    const bookings = records.appointments.filter(item => item.date === selected && !['cancelled', 'pending'].includes(item.status));
     $('day-message').textContent = blocked ? 'Dia fechado para novos agendamentos.' : bookings.length ? 'Toque no atendimento para ver ou editar os detalhes.' : 'Seu dia está livre. Toque em um horário para agendar.';
     const container = $('day-slots');
     container.replaceChildren();
@@ -192,6 +209,7 @@
     $('client-whatsapp').hidden = !record;
     if (record) $('client-whatsapp').href = 'https://wa.me/' + record.phone;
     $('dialog-error').hidden = true;
+    $('request-actions').hidden = record?.status !== 'pending';
     $('appointment-dialog').showModal();
   }
 
@@ -211,6 +229,10 @@
     } catch (error) { $('dialog-error').textContent = error.message; $('dialog-error').hidden = false; }
     finally { button.disabled = false; }
   });
+
+  $('confirm-request').addEventListener('click', () => { $('booking-status').value = 'confirmed'; $('appointment-form').requestSubmit(); });
+  $('cancel-request').addEventListener('click', () => { $('booking-status').value = 'cancelled'; $('appointment-form').requestSubmit(); });
+  setInterval(() => { if (!document.hidden && csrf && !document.querySelector('dialog[open]') && !loading) loadMonth(); }, 60000);
 
   $('login-form').addEventListener('submit', async event => {
     event.preventDefault();

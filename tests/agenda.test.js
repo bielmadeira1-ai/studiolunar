@@ -51,16 +51,19 @@ test('public booking is saved once and does not expose client data', async () =>
   assert.equal(retried.body.id, first.body.id);
   assert.equal(app.state().appointments.length, 1);
   const calendar = await app.call('calendar');
-  assert.deepEqual(calendar.body.busy, [{ date: body.date, time: body.time }]);
+  assert.deepEqual(calendar.body.busy, []);
   assert.ok(!JSON.stringify(calendar.body).includes(body.name));
   assert.ok(!JSON.stringify(calendar.body).includes('999991234'));
 });
 
-test('concurrent requests cannot book the same slot', async () => {
-  const app = fixture();
-  const responses = await Promise.all([app.call('book', booking()), app.call('book', booking())]);
+test('pending requests stay available and only one concurrent confirmation succeeds', async () => {
+  const app = fixture(); await app.setup();
+  const requests = await Promise.all([app.call('book', booking()), app.call('book', booking())]);
+  assert.deepEqual(requests.map(response => response.statusCode), [200, 200]);
+  assert.deepEqual((await app.call('calendar')).body.busy, []);
+  const responses = await Promise.all(app.state().appointments.map(record => app.call('save', { ...record, status: 'confirmed' }, { authenticated: true })));
   assert.deepEqual(responses.map(response => response.statusCode).sort(), [200, 409]);
-  assert.equal(app.state().appointments.length, 1);
+  assert.equal((await app.call('calendar')).body.busy.length, 1);
 });
 
 test('day and slot blocks are enforced and can be reopened', async () => {
@@ -76,6 +79,8 @@ test('day and slot blocks are enforced and can be reopened', async () => {
 test('client details can be edited on a day closed to new bookings', async () => {
   const app = fixture(); await app.setup();
   await app.call('book', booking());
+  const pending = app.state().appointments[0];
+  await app.call('save', { ...pending, status: 'confirmed' }, { authenticated: true });
   await app.call('block', { date: '2099-11-11', time: null, blocked: true }, { authenticated: true });
   const record = app.state().appointments[0];
   const update = await app.call('save', { ...record, status: 'confirmed', notes: 'Francesinha azul' }, { authenticated: true });
@@ -111,4 +116,15 @@ test('password change invalidates old sessions', async () => {
   assert.equal((await app.call('admin', null, { authenticated: true, requestCookie: previous })).statusCode, 401);
   assert.equal((await app.call('login', { password: 'local-password-strong' })).statusCode, 401);
   assert.equal((await app.call('login', { password: 'changed-password-strong' })).statusCode, 200);
+});
+
+ test('in-progress blocks the slot and cancellation releases it', async () => {
+  const app = fixture(); await app.setup();
+  await app.call('book', booking());
+  let record = app.state().appointments[0];
+  assert.equal((await app.call('save', { ...record, status: 'in_progress' }, { authenticated: true })).statusCode, 200);
+  assert.equal((await app.call('calendar')).body.busy.length, 1);
+  record = app.state().appointments[0];
+  await app.call('save', { ...record, status: 'cancelled' }, { authenticated: true });
+  assert.deepEqual((await app.call('calendar')).body.busy, []);
 });
